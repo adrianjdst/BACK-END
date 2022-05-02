@@ -1,5 +1,5 @@
 {
-    "Person1" : {
+    "person1" : {
         "id" : 1 ,
         "firstname" : "Joao" ,
         "lastname" : "Andrade",
@@ -7,7 +7,7 @@
         "age" : "23",
         "profession" : "Soccer player"
     },
-    "Person2" : {
+    "person2" : {
         "id" : 2 ,
         "firstname" : "Maria" ,
         "lastname" : "Goncalves",
@@ -15,7 +15,7 @@
         "age" : "18",
         "profession" : "Actress"
     },
-    "Person3" : {
+    "person3" : {
         "id" : 3 ,
         "firstname" : "Gabriel" ,
         "lastname" : "Nunes",

@@ -5,6 +5,7 @@ const port = 2000;
 
 
 const bodyParser = require('body-parser');
+const { response } = require('express');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : false}));
 
@@ -21,32 +22,69 @@ console.log(readFile('./persons.json'));
 // 2º é o codigo que vai ser executado quando
 // este endpoint for invocado
 
-app.get('/', (req, res) => {
-  res.send('Hello Worldddd!')
+app.get('/', function(req, res) {
+  res.send('Hello Worldddd!');
 })
 
-app.get('/users', (req, res) => {
-  var fileContent = readFile('./persons.json');
-  res.send(fileContent);
+app.get('/users', function(req, res) {
+
+
+ res.send(personsObject);
+})
+
+app.delete('/users/:id', function(req, res) {
+  var id = req.params.id;
+
+  var person = personsObject["person" + id];
+
+  if(person == undefined){
+    res.send("This id does not exist");
+  }
+  else{
+    delete personsObject["person" + id];
+    res.send("This id" + " "+ id + " " + "was deleted");
+  }
+})
+
+app.get('/users/:id', function(req, res) {
+  var id = req.params.id;
+
+  var person = personsObject["person" + id];
+
+  if(person == undefined){
+    res.send("This id does not exist");
+  }
+  else{
+    res.send(person);
+  }
+})
+
+app.put('/users/:id', function(req, res) {
+  var id = req.params.id;
+
+  var person = req.body;
+
+  if(person == undefined){
+    res.send("This id does not exist");
+  }
+  else{
+    r;
+  }
 })
 
 app.post('/users', (req, res) => {
 
+// person que vem do body do pedido
   var person = req.body;
-
-  var personsString = readFile ('./persons.json');
-
-  var personsObject = JSON.parse(personsString);
-
+// selecionar as chaves de uma array e obter o seu tamanho
   var size = Object.keys(personsObject).length;
+  //incrementa 1 valor
   size++;
-  var str = 'person';
-  var personId = str + size;
-
+  //atribuir o id igual ao tamanho
   person.id = size;
-  
-  personsObject[personId] = person;
-
+  //criar uma nova chave por exemplo: person6 que tera o valor da person que vem no body
+  personsObject["person" + person.id] = person;
+  //enviar o id da pessoa que foi inserida
   res.send(personsObject);
 })
 
@@ -54,10 +92,10 @@ app.put('/users', (req, res) => {
   res.send('THIS IS A PUT');
 })
 
-app.delete('/users', (req, res) => {
-  res.send('THIS IS A DELETE');
-})
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+var personsString = readFile ('./persons.json');
+var personsObject = JSON.parse(personsString);
